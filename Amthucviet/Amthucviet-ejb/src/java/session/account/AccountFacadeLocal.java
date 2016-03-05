@@ -6,6 +6,7 @@
 package session.account;
 
 import entity.Account;
+import entity.Role;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -28,6 +29,9 @@ public interface AccountFacadeLocal {
 
     List<Account> findRange(int[] range);
 
+    List<Account> findByName(String name, Role role);
+    
+    List<Account> findByEmail(String email, Role role);
     int count();
     
 }

@@ -6,6 +6,9 @@
 package session.account;
 
 import entity.Account;
+import entity.Profile;
+import entity.Role;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,6 +30,23 @@ public class AccountFacade extends AbstractFacade<Account> implements AccountFac
 
     public AccountFacade() {
         super(Account.class);
+    }
+    /**
+     * @author hien 4/3/2016 
+     * @param name username
+     * @param role type of account
+     * @return list<Account>
+     */
+    @Override
+    public List<Account> findByName(String name, Role role) {
+         return em.createNamedQuery("Acount.findByUsername").setParameter("username", "%"+name+"%")
+                 .setParameter("idrole", role.getIdrole()).getResultList();
+    }
+
+    @Override
+    public List<Account> findByEmail(String email, Role role) {
+        return em.createNamedQuery("Acount.findByEmail").setParameter("email", "%"+email+"%")
+                 .setParameter("idrole", role.getIdrole()).getResultList();
     }
     
 }
