@@ -20,6 +20,7 @@ import session.AbstractFacade;
  */
 @Stateless
 public class AccountFacade extends AbstractFacade<Account> implements AccountFacadeLocal {
+
     @PersistenceContext(unitName = "Amthucviet-ejbPU")
     private EntityManager em;
 
@@ -31,22 +32,27 @@ public class AccountFacade extends AbstractFacade<Account> implements AccountFac
     public AccountFacade() {
         super(Account.class);
     }
+
     /**
-     * @author hien 4/3/2016 
+     * @author hien 4/3/2016
      * @param name username
      * @param role type of account
      * @return list<Account>
      */
     @Override
-    public List<Account> findByName(String name, Role role) {
-         return em.createNamedQuery("Acount.findByUsername").setParameter("username", "%"+name+"%")
-                 .setParameter("idrole", role.getIdrole()).getResultList();
+    public Account findByName(String name) {
+        return (Account)em.createNamedQuery("Acount.findByUsername").setParameter("username", "%" + name + "%").getSingleResult();
     }
 
     @Override
     public List<Account> findByEmail(String email, Role role) {
-        return em.createNamedQuery("Acount.findByEmail").setParameter("email", "%"+email+"%")
-                 .setParameter("idrole", role.getIdrole()).getResultList();
+        return em.createNamedQuery("Acount.findByEmail").setParameter("email", "%" + email + "%")
+                .setParameter("idrole", role.getIdrole()).getResultList();
     }
-    
+
+    @Override
+    public boolean login(Account user) {
+        Account checkUser = find(user.getUsername());
+        return checkUser != null && checkUser.getPassword().equals(user.getPassword()); 
+    }
 }

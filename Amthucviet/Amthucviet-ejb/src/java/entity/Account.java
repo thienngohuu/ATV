@@ -30,14 +30,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author stom2
  */
 @Entity
-        @Table(name = "accounts")
-        @XmlRootElement
-        @NamedQueries({
-            @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a"),
-            @NamedQuery(name = "Account.findByIdaccount", query = "SELECT a FROM Account a WHERE a.idaccount = :idaccount"),
-            @NamedQuery(name = "Account.findByUsername", query = "SELECT a FROM Account a WHERE a.username like :username AND a.idrole = :idrole"),
-            @NamedQuery(name = "Account.findByEmail", query = "SELECT a FROM Account a WHERE a.email like :email AND a.idrole = :idrole"),           
-        @NamedQuery(name = "Account.findByStatus", query = "SELECT a FROM Account a WHERE a.status = :status")
+@Table(name = "accounts")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a"),
+    @NamedQuery(name = "Account.findByIdaccount", query = "SELECT a FROM Account a WHERE a.idaccount = :idaccount"),
+    @NamedQuery(name = "Account.findByUsername", query = "SELECT a FROM Account a WHERE a.username = :username"),
+    @NamedQuery(name = "Account.findByEmail", query = "SELECT a FROM Account a WHERE a.email like :email AND a.idrole = :idrole"),
+    @NamedQuery(name = "Account.findByStatus", query = "SELECT a FROM Account a WHERE a.status = :status")
 
 })
 public class Account implements Serializable {
@@ -81,6 +81,11 @@ public class Account implements Serializable {
     private Role idrole;
 
     public Account() {
+    }
+
+    public Account(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public Account(Integer idaccount) {

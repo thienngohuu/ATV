@@ -29,9 +29,11 @@ public interface AccountFacadeLocal {
 
     List<Account> findRange(int[] range);
 
-    List<Account> findByName(String name, Role role);
+    Account findByName(String name);
     
     List<Account> findByEmail(String email, Role role);
+    
+    boolean login(Account account);
     int count();
     
 }
